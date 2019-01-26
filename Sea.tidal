@@ -1,0 +1,82 @@
+
+cps 1
+
+--sea#1 high--------------------------------------------------
+d1
+$ weave 16 (sound "[sea*8]" # n (run 30))
+[
+accelerate (choose [0.1..1]),
+(speed rand),
+nudge "0.2..1"
+]
+# hpf (slow (choose [1,1.5..20]) $ discretise 50 (scale 400 1200 $ sine1))
+# hpq (scale 0.05 0.2 ( slow 14 (sine1)))
+
+d1 silence
+
+hush
+
+--sea#2  low-----------------------------------------------
+bps(100/120)
+
+d2 $ weave 16 (sound "[sea*8]" # n (run 38))
+[
+accelerate (choose [0.1..1]),
+(speed rand),
+nudge "0.2..1"
+ -- speed "1 2 3"
+]
+# cut "0"
+# cutoff (slow 7 $ scale 1000 7000 sine1)
+# gain (slow 6 $ sine1*1.2)
+
+d2 silence
+
+hush
+
+--sea#3 seashore----------------------------------------------
+
+d3
+$ jux (rev)
+$ weave 16 (sound (choose ["sea","mus2","sea2","mus" ]) # n (choose [1..40]))
+[
+accelerate (choose [0.1..0.8]),
+(speed (scale 0.9 1.2 $ rand)),
+nudge (choose [0.2,0.3..3])
+]
+# cut "0"
+-- |+| release (slow 8 $ choose [0.0,0.15..2])
+# cutoff (slow 10 $ scale 200 2500 sine1)
+-- # delayfb 0.7
+-- # delay 0.5
+# gain (discretise 7 (slow 9  (1 - sine1*0.6) ))
+
+d3 silence
+
+hush
+
+--sea# 4 lighthouse-----------------------------------------------
+
+d4
+   -- $ slow 3
+   -- $  jux (sometimes (rev).(|-|speed sine1))
+   $ every 1 (((|-| gain (slow 4 $ (sine1*0.3 +0.25))).(|+|cutoff (sine1*1500 + ((slow 4 $ sine1)*4000))).(|+|speed "[-1.2,0.8]")))
+   -- $ every 2 (|=| accelerate (slow 2 $sine1*0.5))
+   -- $ chop 2
+   $ every 4 (striate (slow 10 (choose [10,15..60])))
+   $ every 5 (fast (choose [5,10..30]))
+   $ every 6 (loopAt (slow 6 (choose [0.7,0.2,0.8,0.3,3,5])))
+   -- $ density "2"
+   -- $ spaceOut ( (map (1/) [1,1.1..8] ) ++ (map (1/) [8,7.5..1]))
+   $ n (irand 20)
+   # s "[tink?,sea?]"
+   # nudge (slow 10 (choose [3,6,1]))
+   -- |+| sustain (choose [0.1,0.3,0.4,0.5,0.2])
+   -- |+| sustain "0.7"
+   # cut "0"
+   -- # up "0"
+   -- # hcutoff "500"
+   -- # orbit 0
+  |=| gain (scale 0.5 1 rand)
+
+hush

@@ -1,0 +1,16 @@
+cps 1
+--straite 1 ~ 200//degradeBy 0.1~0.4
+
+d1
+   $ degradeBy 0.1
+   $ slow (choose [2,4..10])
+   $ every 3 ((sometimes $ density (choose [1,2,3])).(|+|cutoff (slow 2.5 $ sine1*3000 + 2000)).(whenmod 7 3 (|=|speed (choose [1]))).(|+| pan sine1))
+   $ every 4 ((|+| gain (slow 4 $ (sine1*0.3 + 0.25))).(|+| shape 0.4).(|+|cutoff (sine1*1000 + 2000)))
+   $ every 5 (within (0.2,0.25) (|=| accelerate (slow 2 $sine1*0.3 + 1.7)))
+   $ striate' 200 (1/20)
+   $ sound "[atc,noise]"
+  |+| n (slow 50 $ irand 50)
+   # cut "0"
+
+
+  hush

@@ -1,0 +1,45 @@
+cps 0.5
+
+d1
+-- $ every 2 (|-|bpf 375)
+-- $ every 3 (loopAt 10)
+-- $ every 4 (slow 100)
+-- $ degradeBy 0.2
+$ jux (rev)
+$ slow 3
+$ weave 20 (sound "[noise3*10,noise*20]"
+# n (run 15)
+)
+[
+-- loopAt 10
+hpf (slow (choose [0.2,0.4..1]) $ discretise 20 (scale 3000 5000 $ sine1))
+# (gain (slow 12 (scale 0.5 0.6 $saw)))
+-- # accelerate "0.6"
+-- # speed (slow 10 $ sine)
+# attack (choose [0.2,0.7])
+# release (choose [0.07,0.2])
+# shape  (slow 2 (scale 0.2 0.3 $ sine1))
+# pan (slow 10 (scale 0.4 0.6 $ sine1))
+# speed (scale 1.5 4 $ rand)
+-- # hpq (slow 20 (scale 0.3 0.8 $ sine1))
+# hpq 0.3
+-- # bpf (slow 32 $ discretise 50 (scale 1000 2500 (sine1)))
+,
+hpf (slow (choose [1,2..3]) $ discretise 10 (scale 4000 6000 $ sine1))
+# speed (slow (choose [3,5..10]) $ discretise 100 (scale 10 40 $ sine1))
+# gain (slow 20 (scale 0.4 0.6 $rand))
+# attack (choose [0.5,0.1])
+# release (choose [0.1,0.9])
+# shape  (slow 4 (scale 0.2 0.3 $ sine1))
+-- # speed (slow 10 (choose [0.1,0.2..1]))
+-- # accelerate "1"
+-- # speed (slow 15 $ sine1)
+-- # speed "[2 0.5 1.5]/10"
+# pan rand
+]
+# room 0.5
+# size 0.3
+-- # gain (slow 10 $ sine1 + 1)
+-- -- (slow 4 (sine1))
+
+hush

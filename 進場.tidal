@@ -1,0 +1,210 @@
+
+-- 01 loopy
+  d2
+    $ within (0.2,0.65) ((density 2).(|+| speed "{[0.2? 0.4]? 1.2? ~ 0.7}%3").(rev).(|+|pan "{0.1 1 0.5}%7"))
+    $ n (run "12,16..60") # sound "mid1(11,20)"
+    # cut"0"
+
+     hush
+
+--02
+  bps 1
+
+  d1
+    $ jux (slow 4)
+    -- $ superimpose (foldEvery [3,4,5] (slow (choose [1,2..10])))
+    -- $ (striate' 2200 (1/150)
+    -- $ chop 2
+    $ sound "mid2*20" # n (slow 60 (irand 60))
+    # begin (slow 10 (scalex 0.1 0.95 $ sine1))
+    # release (slow 10 (scalex 0.2 0.4 $ saw1))
+    # attack (slow 11 (scalex 0.1 0.4 $ sine))
+    # nudge (slow 10 $ iter 10 "0.5,1.5..10")
+    # cut"0"
+
+  hush
+
+  d2
+    $ slowspread ($)
+          [rev,
+          slow 1, slow 2 . juxcut (triple (1%6)), striate 2]
+    $ whenmod 5 3 (trunc 0.8)
+    -- $ quad (1%16)
+    $ sound "[mid1,mid2]"
+    # n (irand 50)
+    -- |+| speed (every 2 ((-0.1+) <$>) "[1 1.2 1.5 1.7, 0.8]")
+    #cut "1"
+
+hush
+
+--01
+cps 0.5
+
+d1
+-- $ jux ((slow (choose [2,4..6])).(rev))
+-- $ sometimes (degrade)
+$ stack
+[
+-- -- spaceOut ( (map (1/) [1,1.5..10] ) ++ (map (1/) [8,7.75..1])) $
+stut' 2 0.25
+      ((sometimes $ density (choose [0.2])).
+      -- (|+|resonance (slow 10 $ sine1*0.4)).
+      -- (|+| cutoff (slow 4 $ sine1*4000)).
+      (sometimes $ (|+|accelerate(choose [-2,1]))).
+      (|*| gain (slow 4 (scalex 0.7 1 $ sine1))).
+      (|+| pan "1 0"))
+(sound "[mid2*20,mid1*10]"
+-- |+| speed (fast 20.2 $ scale 0.95 1.1 $ saw)
+)
+      # n (slow (choose [1,2..10]) $ irand 60)
+      # pan (slow 30 (scale 0.3 0.7 $ sine1))
+      # begin (slow 5 (scale 0.1 0.95 $ sine1))
+      # release (fast 10 (scale 0.3 2 $ sine))
+      # attack (fast 18 (scale 0.02 0.2 $ sine))
+      # cut 0
+      # nudge (slow 20 $ iter 50 "1,2..50")
+]
+|+| lpf (slow 5(scalex 500 6000 $ saw1))
+|+| hpf (slow 18(scalex 400 4000 $ sine1))
+
+
+hush
+
+d2
+-- $ slow2
+-- $ sometimes (degrade)
+-- $ jux ((slow (choose [2,3..5])).(rev))
+$ stack
+[
+-- -- spaceOut ( (map (1/) [1,1.5..10] ) ++ (map (1/) [8,7.75..1])) $
+-- stut' 2 0.5
+--       ((sometimes $ density (choose [0.2,0.5,0.2])).
+--       -- (|+|resonance (slow 10 $ sine1*0.3)).
+--       -- (|+| cutoff (slow 4 $ sine1*1000)).
+--       -- (sometimes $ (|+|accelerate(choose [-2,1]))).
+--       (|*| gain (slow 4 (scalex 0.7 1 $ sine1))).
+--       (|+| pan "1 0"))
+(sound "[mid2*20]"
+-- |+| speed (fast 20.2 $ scale 1 1.05 $saw)
+)
+      # n (slow 40 $ run 40)
+      -- # pan (slow 30 $ rand)
+      # begin (slow 3 (scale 0.1 0.9 $ sine1))
+      # release (fast 10 (scale 0.3 1 $ sine))
+      # attack (fast 10 (scale 0.1 0.4 $ sine))
+      # cut 0
+      -- # nudge (slow 10 $ iter 40 "1,1.5..40")
+]
+-- |+| hpf (slow 20 (scalex 300 1500 $ sine1))
+
+hush
+
+--03
+bps 1
+
+d2
+-- $ degrade
+-- $ loopAt (choose [1.2])
+$ jux (slow (choose [2,3..5]))
+$ stack
+[
+-- spaceOut ( (map (1/) [1,1.5..10] ) ++ (map (1/) [8,7.75..1])) $
+stut' 2 0.125
+      ((sometimes $ density (choose [0.2,0.66,2.6])).
+      -- (|+|resonance (slow 10 $ sine1*0.1)).
+      (|+|cutoff (slow 4 $ sine1*6000)).
+      -- (sometimes $ (|+|accelerate(choose [0.4]))).
+      (|*|gain (slow 4 (scalex 0.7 1 $ sine1))).
+      (|+| pan "1 0"))
+(sound "[mid2*10,mid1*10]"
+      |+| speed (fast 20.1 $ scale 0.7 1.2 $saw)
+      )
+      # n (irand 60)
+      -- # pan (slow 3 $ rand)
+      # begin (slow 20 (scale 0.05 0.5 $ rand))
+      # release (slow 20 (scale 0.5 2 $ sine))
+      # attack (fast 18 (scale 0.4 0.3 $ sine))
+      # cut 0
+      -- # nudge (slow 10 $ iter 10 "0.5,1.5..10")
+]
+|=| lpf (fast 20 (scale 400 14000 $ rand))
+ -- # lpq (scale 0.1 0.3 $ rand)
+|+| lpf (slow 5(scalex 500 6000 $ saw1))
+|+| hpf (slow 18(scalex 400 4000 $ sine1))
+|+| room (discretise (1/20) (fast 10 "[0.1,0.2..0.9]"))
+ # size (slow 12 $ sine1*0.7 + 0.1)
+
+ --04
+ bps 1
+
+ d1
+ $ jux (slow (choose [2,3..5]))
+ $ degrade
+ -- $ loopAt (choose [1.2])
+ $ stack
+ [
+ -- spaceOut ( (map (1/) [1,1.5..10] ) ++ (map (1/) [8,7.75..1])) $
+ stut' 2 0.125
+       ((sometimes $ density (choose [0.2,0.66,2.6])).
+       -- (|+|resonance (slow 10 $ sine1*0.1)).
+       (|+|cutoff (slow 4 $ sine1*6000)).
+       -- (sometimes $ (|+|accelerate(choose [0.4]))).
+       (|*|gain (slow 4 (scalex 0.8 1 $ sine1))))
+       -- (|+| pan "1 0"))
+ (sound "[mid2*6? mid2*10?]"
+       -- |+| speed (fast 20.1 $ scale 0.9 1.2 $saw)
+       )
+       # n (irand 60)
+       -- # pan (slow 3 $ rand)
+       # begin (slow 20 (scale 0.05 0.5 $ rand))
+       # release (slow 20 (scale 0.5 2 $ sine))
+       # attack (fast 18 (scale 0.8 0.3 $ sine))
+       # cut 0
+       -- # nudge (slow 10 $ iter 10 "0.5,1.5..10")
+ ]
+ |=| lpf (fast 20 (scale 400 14000 $ rand))
+  -- # lpq (scale 0.1 0.3 $ rand)
+ |+| lpf (slow 5(scalex 500 6000 $ saw1))
+ |+| hpf (slow 18(scalex 400 4000 $ sine1))
+ |+| room (discretise (1/20) (fast 10 "[0.1,0.2..0.9]"))
+  # size (slow 12 $ sine1*0.7 + 0.1)
+
+hush
+
+d2 silence
+
+--06
+cps 1
+
+d2
+-- $ every 8 (|=| accelerate (choose [-1,0..2]))
+-- $ density (slow 2 $ run 4)
+$ every 2 (sometimes $ juxBy 0.2 ((|+| n "[4]").(slow 4)))
+$ every 6 ((rev))
+$ every 7 (loopAt (fast 4 (choose[0.75,1..1.75])))
+$ every 3 (sometimes $ juxBy 0.8 ((|+| n "0").(slow 3)))
+-- $ superimpose ((# speed "1.2").(density 1).(slow 4))
+-- $ loopAt "[1]"
+( sound "[mid1*10]"
+-- |=| speed "[1]"
+|+| speed (fast (choose [15.0006,15.0005..15.0000]) $ scale 0.95 1.02 $rand)
+)
+|=| gain ((scalex 0.7 1 $ rand))
+# begin (slow 15 (scale 0.02 0.98 $sine1))
+# release (slow 20 (scale 0.25 2 $sine1))
+# attack (slow 12 (scale 0.07 0.4  $sine1))
+-- |=| n "[1,2..40]/4"
+# n (slow 10 (irand 40))
+-- # lpq "0.1"
+# nudge (slow 4 (scale 0.1 2.5 (slow 13 $ saw1)))
+-- # lpf (slow 6 (scale 1000 7000 (fast 0.3 $ sine1)))
+# delayfb (discretise (1/15) (slow 10 (scale 0.6 0.4 $sine1)))
+# delayt (discretise (1/20) (slow 10 (scale 0.02 0.3 $sine1)))
+# delay (discretise (1/15) (slow 10 (scale 0.2 0.5 $sine1)))
+# cut 0
+# size (slow 5 (choose[0.4,0.5,0.8,0.7]))
+# room "0.3"
+|=| speed (slow (choose[0.5,0.75..4]) "<1.1,1.12..1.2>")
+-- # orbit 1
+|+| lpf (slow 8 (scalex 200 7000 $ saw1))
+|+| hpf (slow 9(scalex 200 4000 $ sine1))

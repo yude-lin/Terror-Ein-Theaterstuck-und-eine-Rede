@@ -1,0 +1,85 @@
+cps (-1)
+
+--repeat rhythm
+
+bps 0.7
+
+d2
+$ every 4 (sometimes $ juxBy 0.4 ((|+| n "1").(slow 4)))
+-- $ every 7 (|+|accelerate "0.99")
+$ every 6 ((rev))
+-- $ every 7 (loopAt (fast 4 (choose[0.75,1..1.75])))
+$ every 3 (sometimes $ juxBy 0.8 ((|+| n "0").(slow 3)))
+-- $ superimpose ((# speed "1").(density 2.5).(slow 4))
+-- $ loopAt "0.3"
+( sound "[mus*20]"
+-- |=| speed "[0]"
+|+| speed (fast (choose [15.0006,15.0005..15.0000]) $ scale 0.97 1.02 $saw1)
+)
+# begin (slow 15 (scale 0.02 0.98 $saw1))
+# release (slow 10 (scale 0.03 0.15 $sine1))
+-- # release "0.8"
+# attack (slow 10 (scale 0.02 0.04 $sine1))
+|=| n "[1,2..20]/20"
+# lpf (slow "<6,12>" (scale 7000 1500 $ sine1))
+-- # cut 1
+# size (slow 4(choose[1.1,0.9,0.7,0.95]))
+# room "0.7"
+|*| gain (choose[0.6,0.8..1])
+# delayfb (discretise (1/12) (slow 10 (scale 0.7 0.4 $sine1)))
+# delayt (discretise (1/15) (slow 12 (scale 0.02 0.4 $sine1)))
+# delay (discretise (1/12) (slow 10 (scale 0.2 0.5 $sine1)))
+-- |+| speed (slow (choose[0.5,0.75..4]) "<1.1,1.12..1.2>")
+-- # nudge (slow 5 (scale 0.1 2 $sine1))
+
+d1 silence
+
+-- |=| speed "0.8"
+hush
+
+do
+  cps 0.7
+
+  d2
+  $ density 3
+  -- $ every 2 (sometimes $ juxBy 0.2 ((|+| n "[1]").(slow 4)))
+  -- $ every 7 (|+|accelerate "0.99")
+  -- $ every 6 ((rev))
+  -- $ every 7 (loopAt (fast 4 (choose[0.75,1..1.75])))
+  -- $ every 3 (sometimes $ juxBy 0.8 ((|+| n "0").(slow 3)))
+  -- $ superimpose ((# speed "0.7").(density 2.5).(slow 4))
+  -- $ loopAt "[1]"
+  ( sound "[mus*20]"
+  |+| speed (fast (choose [15.0009,15.0008..15.0000]) $ scale 0.97 1.02 $saw1)
+  )
+  # begin (slow 20 (scale 0.02 0.98 $sine1))
+  # attack (slow 10 (scale 0.2 1 $sine1))
+  # release (slow 20 (scale 0.4 3 $sine1))
+  |=| n "[1,3..20]/4"
+  # lpf (slow 6 (scale 1000 7000 (fast 0.3 $ sine1)))
+  -- # lpq "0.1"
+  # delayfb (discretise (1/12) (slow 10 (scale 0.7 0.4 $sine1)))
+  # delayt (discretise (1/15) (slow 12 (scale 0.02 0.4 $sine1)))
+  # delay (discretise (1/12) (slow 10 (scale 0.2 0.5 $sine1)))
+  # cut 0
+  # size (slow 5 (choose[1,0.5,0.8,1.1]))
+  # room "0.6"
+  -- |=| speed (slow (choose[0.5,0.75..4]) "<1.1,1.12..1.3>")
+  # nudge (slow 4 (scale 0.1 2.5 (slow 13 $ saw1)))
+
+
+hush
+
+cps 1
+
+d2
+$ sound "dna*15"
+# begin (slow 20 (scale 0.02 0.98 $sine1))
+# cut 1
+
+
+"[0.1,0.2..10]"
+
+
+# cut 1
+-- # release "10"

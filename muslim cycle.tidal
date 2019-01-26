@@ -1,0 +1,48 @@
+
+--mus (12) mus2 (18)
+
+  do
+    cps 1.5
+    d1
+      $
+      superimpose (### [shape 0.2, gain 0.55, cutoff 4000, hcutoff 1000])
+      -- $
+      -- inside 2 (spread ($) [id,rev, id, (|*| speed "<-1>"), id, ((stut 4 0.125 (-1/4)).(zoom ((1/6), (3/4)))), id, ((fast "<1 2 2.5 2 0.75>").(|*| release 0.3)), id])
+      -- $
+      -- foldEvery [9,21] ((slow 0.8).(rev))
+      $
+      stack [
+        loopAt "<4>" $ chop "12" $ s "[mus]"  |-| n (slow 12 (run 11))  ,
+        slow 1
+        $ superimpose
+        (### [speed (1/3), hcutoff 2000, release 0.5 , speed "0.4"])
+        $ s "mus" |*| gain (scale 0.65 0.75 (slow 10 $ sine1))]
+     |+| n (slow 18 (run 17))
+     |=| release "2"
+     -- # hbrick "0.01"
+     -- # smear "0.01"
+     -- # freeze "1"
+     # cut 0
+     -- # orbit 1
+     -- # scram "0.6 0.3"
+
+hush
+--mus ATC 20180520
+do
+   cps 1.5
+   let p1 rot nplus = (rot <~ ) $ n "< 1 2 3 4 5 7 9 3 10>" |=| s "atc" # hold 2.0 # att 0.5 # release 2 # begin rand |+| n nplus
+       rots = spread ($) [rotL x | x <- [0.1, 0.5 .. 2.0]]
+       atts = (discretise (1/2) $ listToPat([x | x <- [0.0,0.125.. 2.0] ]))
+       panner from to slowness = pan (scale from to $ slow slowness $ sine)
+       p2 = stack[
+           slow 2 $ p1 0.0 10 # panner 0.0 0.25 7,
+           slow 3 $ rots $ p1 0.3 3 |=| att 0.5 |*| hold 2 |*| release 4 # panner 0.5 0.75 11,
+           slow 4 $ rots $ p1 0.6 5 |*| speed 0.5 # accelerate 1.0# panner 0.75 1.0 9
+             ]
+       p3 = degradeBy "<0 1.0 0.75 0.5>" $ slowcat[p2, slow 3 $ p1 0.0 0 |=| n "<1 2 3 5 5 5 1>"]
+       --
+       sp1 = slow 3 $ rots $ n "<1 20 9 10 15>" # s "mus/3.6" # att atts # hold 2 # rel 3 # speed "<0.5 0.25>" # begin (scale 0 0.75 $ slow 10 $ saw1) |+| att 1 # room (slow 17 $ saw1) # size rand |+| speed "<0.125 0.3 0.53>" |+| n (irand 12)
+   d2 $ stack [
+       p3 # room "0.1" # accelerate "<0 0.5 0.2 0.1 -1>" |+| n "<0 3 2 4 5 6 7>" |*| hold 2 |=| att atts,
+       slow 1.35 $ degradeBy 0.5 $ p3 # s "mus*4" |*| speed 1.2 # gain 1.05,
+       sp1]
