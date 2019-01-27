@@ -14,3 +14,51 @@ d1
 
 
   hush
+
+
+  cps 0.2
+
+  d1
+     -- $ jux (0.25 <~)
+     $ slow 50
+     $ stut' 3 0.5 ((sometimes $ density (choose [1])).(|+|cutoff (slow 2.5 $ sine1*5000)).(|*|gain "1").(whenmod 7 3 (|=|speed (choose [2]))).(|+| pan "1 0"))
+     $ every 1 (((|+| gain (slow 4 $ (sine1*0.3 +0.25))).(|+|cutoff (sine1*1000 + 5000)).(|+|speed "[-1.2,0.8]")))
+     -- $ every 1 (|=| accelerate (slow 2 $sine1*0.5))
+     -- $ chop 2
+     -- $ loopAt ( choose [1,0.2])
+     -- $ density "2"
+     $ spaceOut ( (map (1/) [1,1.1..8] ) ++ (map (1/) [8,7.5..1]))
+     $ n (irand 50)
+     # s "[atc]"
+     -- |+| sustain (choose [0.1,0.3,0.4,0.5,0.2])
+     -- |+| sustain "0.1"
+     # cut "0"
+     |+| gain "0.8"
+     |+| n "1"
+
+    hush
+
+    cps 0.02
+
+    d1
+       $ jux (0.15 <~)
+       -- $ slow 4
+       $ stut' 2 0.5 ((sometimes $ density (choose [1])).(|+|cutoff (slow 2.5 $ sine1*3000 + 2000)).(|*|gain "1").(whenmod 7 3 (|=|speed (choose [1]))).(|+| pan sine1))
+       -- $ every 1 (((|+| gain (slow 4 $ (sine1*0.3 +0.25))).(|+|cutoff (sine1*1000 + 5000)).(|+|speed "[-1.2,0.8]")))
+       -- $ every 1 (|=| accelerate (slow 2 $sine1*0.5))
+       $ degradeBy 0.9
+       $ chop 10
+       -- $ loopAt ( choose [1,0.2])
+       $ density "0.4"
+       -- $ slow 40
+       -- $ spaceOut ( (map (1/) [1,1.1..8] ) ++ (map (1/) [8,7.8..1]))
+       $ striate 15
+       $ n (irand 40)
+       # s "[atc,noise]"
+       -- |+| sustain (choose [0.1,0.3,0.4,0.5,0.2])
+       -- |+| sustain "0.5"
+       # cut "0"
+       |+| gain "1"
+       |+| n (slow 20 $ run 30)
+
+      hush
