@@ -5,7 +5,7 @@ d1
 -- $ slow 7
 $ off (slow 4 "<0.05,0.1..2>") ((|+| n (choose [1,2,3])).(rev)
 -- .(|=| gain (choose[0.5,0.6..1]))
--- .(|=| lpf (scale 200 5000 $ sine1))
+-- .(|=| lpf (scale 200 5000 $ sine))
 )
 $ sound "[gas:2(5,17),noise(2,17)]"
 -- |+| speed (slow 10 $ choose [0.1,0.125..0.6])
@@ -25,7 +25,7 @@ d3
 $ off (slow 20 "<0.05,0.1..1>") ((|+| n (choose [1,2,3]))
 .(degradeBy 0.4)
 .(|=| gain (choose[0.5,0.75..1]))
-.(|-| speed (scale 0.5 1.2 $ sine1))
+.(|-| speed (scale 0.5 1.2 $ sine))
 .(loopAt (choose [0.5,1..10]))
 .(|=| lpf (scale 400 6000 $ saw))
 )
@@ -33,10 +33,10 @@ $ stack [
 -- chop 10 $ sound "pebbles(3,10)",
 (sound "pebbles(2,10)"
 |+| speed (slow 20 $ choose [0.3,0.4..1]))
-|=| gain (scale 0.4 1.2 $ saw1)
+|=| gain (scale 0.4 1.2 $ saw)
 ]
 # cut 0
--- |+| lpf (slow 5 (scale 300 2000 $ sine1))
+-- |+| lpf (slow 5 (scale 300 2000 $ sine))
 -- |-| accelerate (choose [0.1,0.125..1])
 -- # attack 0.4
 -- # release 2
@@ -59,7 +59,7 @@ slow (choose [1,2..5]) $
 sound "[wbub(2,12)]"
 |=| speed (choose [1,1.1..2])
 |+| n (fast 5 (choose [0,2..12]))
-|*| gain (slow 3 (scale 0.6 0.9 $ saw1))
+|*| gain (slow 3 (scale 0.6 0.9 $ saw))
 # gain 1
 ,
 striate 10
@@ -71,13 +71,13 @@ $ (sound "sail(2,9)"
 ]--
 # cut 1
 -- |+| accelerate (choose [0.1,0.125..1])
--- |=| gain (slow 2 (scale 0.6 1.2 $ saw1))
+-- |=| gain (slow 2 (scale 0.6 1.2 $ saw))
 -- |=| speed "[2]"
 |=| nudge (discretise (1/12) (slow 10 (choose [0.2,0.4..1])))
--- |=| lpf (slow 5 (scale 400 6000 $ sine1))
+-- |=| lpf (slow 5 (scale 400 6000 $ sine))
 -- # lpq (scale 0.1 0.3 $ rand)
 -- |+| room (discretise (1/20) (fast 10 "[0.1,0.2..0.9]"))
--- # size (slow 2 $ sine1*0.9 + 0.1)
+-- # size (slow 2 $ sine*0.9 + 0.1)
 # attack 0.3
 # release 2
 
