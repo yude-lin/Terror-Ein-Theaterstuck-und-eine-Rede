@@ -9,8 +9,9 @@ $ off (slow 4 "<0.05,0.1..2>") ((|+| n (choose [1,2,3])).(rev)
 )
 $ sound "[gas:2(5,17),noise(2,17)]"
 -- |+| speed (slow 10 $ choose [0.1,0.125..0.6])
--- |+| accelerate (choose [0.1,0.125..1])
+|+| accelerate (choose [0.1,0.125..1])
 -- # attack 0.13
+# cps 2
 
 hush
 

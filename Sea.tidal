@@ -9,11 +9,24 @@ accelerate (choose [0.1..1]),
 (speed rand),
 nudge "0.2..1"
 ]
-# hpf (slow (choose [1,1.5..20]) $ segment 50 (range 400 1200 $ sine))
+# hpf (slow (choose [1,1.5..20]) $ segment 5 (range 400 1200 $ sine))
 # hpq (range 0.05 0.2 ( slow 14 (sine)))
 # gain 0.9
 
+hush
+
 d1 silence
+
+d1
+  $ s "sea"
+  # nl
+  + begin (osc 4 16 0 0.95 sine)
+  # release 1
+  # hold 0.2
+  # speed 2
+
+  hush
+
 
 hush
 
