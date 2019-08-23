@@ -27,7 +27,7 @@
      -- # scram "0.6 0.3"
 
 hush
---mus ATC 20180520
+--ATC 20180520
 do
    cps 1.5
    let p1 rot nplus = (rot <~ ) $ n "< 1 2 3 4 5 7 9 3 10>" |=| s "atc" # hold 2.0 # att 0.5 # release 2 # begin rand |+| n nplus

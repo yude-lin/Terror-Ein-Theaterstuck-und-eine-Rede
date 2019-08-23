@@ -70,16 +70,3 @@ do
 
 hush
 
-cps 1
-
-d2
-$ sound "dna*15"
-# begin (slow 20 (scale 0.02 0.98 $sine1))
-# cut 1
-
-
-"[0.1,0.2..10]"
-
-
-# cut 1
--- # release "10"
