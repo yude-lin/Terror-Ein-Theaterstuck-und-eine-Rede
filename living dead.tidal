@@ -28,13 +28,13 @@ $ off (slow 20 "<0.05,0.1..1>") ((|+| n (choose [1,2,3]))
 .(|=| gain (choose[0.5,0.75..1]))
 .(|-| speed (range0.5 1.2 $ sine))
 .(loopAt (choose [0.5,1..10]))
-.(|=| lpf (range400 6000 $ saw))
+.(|=| lpf (range 400 6000 $ saw))
 )
 $ stack [
 -- chop 10 $ sound "pebbles(3,10)",
 (sound "pebbles(2,10)"
 |+| speed (slow 20 $ choose [0.3,0.4..1]))
-|=| gain (range0.4 1.2 $ saw)
+|=| gain (range 0.4 1.2 $ saw)
 ]
 # cut 0
 -- |+| lpf (slow 5 (range300 2000 $ sine))
